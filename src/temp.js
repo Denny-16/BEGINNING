@@ -1,7 +1,6 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React, { useState } from "react";
+import { createRoot } from "react-dom/client";
 import "./index.css"; // Tailwind styles
-
 const temp = "Shop Now";
 
 // ✅ Sample Data
@@ -106,7 +105,7 @@ const data = [
 ];
 
 // ✅ Navbar
-const Navbar = () => (
+/*const Navbar = () => (
   <nav className="flex items-center justify-between p-4 shadow bg-white sticky top-0 z-50">
     <div className="text-pink-600 font-bold text-xl">
       <a href="#">Myntra</a>
@@ -140,6 +139,187 @@ const Navbar = () => (
     <div className="md:hidden text-2xl">☰</div>
   </nav>
 );
+*/
+const Navbar = () => {
+  const [activeMenu, setActiveMenu] = useState(null);
+
+  const categories = [
+    {
+      name: "Men",
+      content: [
+        {
+          heading: "Topwear",
+          items: ["T-Shirts", "Shirts", "Jackets"],
+        },
+        {
+          heading: "Bottomwear",
+          items: ["Jeans", "Trousers", "Shorts"],
+        },
+        {
+          heading: "Footwear",
+          items: ["Casual Shoes", "Sports Shoes", "Formal Shoes"],
+        },
+      ],
+    },
+    {
+      name: "Women",
+      content: [
+        {
+          heading: "Indian Wear",
+          items: ["Kurtas", "Sarees", "Lehengas"],
+        },
+        {
+          heading: "Western Wear",
+          items: ["Tops", "Dresses", "Jeans"],
+        },
+        {
+          heading: "Footwear",
+          items: ["Heels", "Flats", "Boots"],
+        },
+      ],
+    },
+    {
+      name: "Kids",
+      content: [
+        {
+          heading: "Boys Clothing",
+          items: ["T-Shirts", "Shirts", "Jeans"],
+        },
+        {
+          heading: "Girls Clothing",
+          items: ["Dresses", "Tops", "Skirts"],
+        },
+        {
+          heading: "Footwear",
+          items: ["Sandals", "Sneakers", "Boots"],
+        },
+      ],
+    },
+    {
+      name: "Home & Living",
+      content: [
+        {
+          heading: "Bed Linen",
+          items: ["Bedsheets", "Pillows", "Blankets"],
+        },
+        {
+          heading: "Décor",
+          items: ["Curtains", "Wall Art", "Clocks"],
+        },
+        {
+          heading: "Dining",
+          items: ["Cutlery", "Dinner Sets", "Glasses"],
+        },
+      ],
+    },
+    {
+      name: "Beauty",
+      content: [
+        {
+          heading: "Makeup",
+          items: ["Lipstick", "Foundation", "Blush"],
+        },
+        {
+          heading: "Skincare",
+          items: ["Face Wash", "Moisturizers", "Serums"],
+        },
+        {
+          heading: "Haircare",
+          items: ["Shampoo", "Conditioner", "Hair Oil"],
+        },
+      ],
+    },
+    {
+      name: "Studio",
+      content: [
+        {
+          heading: "Style Tips",
+          items: ["Trending Now", "Celebrity Looks", "How to Wear"],
+        },
+        {
+          heading: "Videos",
+          items: ["Fashion Shows", "Makeup Tutorials", "Behind the Scenes"],
+        },
+        {
+          heading: "Articles",
+          items: ["Fashion News", "Blogs", "Tips & Tricks"],
+        },
+      ],
+    },
+  ];
+
+  return (
+    <nav className="relative bg-white shadow sticky top-0 z-50">
+      <div className="flex items-center justify-between p-4">
+        {/* Brand */}
+        <div className="text-pink-600 font-bold text-xl">
+          <a href="#">Myntra</a>
+        </div>
+
+        {/* Nav Items */}
+        <ul className="hidden md:flex space-x-6 font-semibold text-sm text-gray-700 relative">
+          {categories.map((category) => (
+            <li
+              key={category.name}
+              onMouseEnter={() => setActiveMenu(category.name)}
+              onMouseLeave={() => setActiveMenu(null)}
+              className="relative"
+            >
+              <a href="#">{category.name}</a>
+
+              {activeMenu === category.name && (
+                <div
+                  className="absolute left-0 top-full w-[700px] bg-white shadow-md p-6 grid grid-cols-3 gap-4 z-40"
+                  onMouseEnter={() => setActiveMenu(category.name)}
+                  onMouseLeave={() => setActiveMenu(null)}
+                >
+                  {category.content.map((col, idx) => (
+                    <div key={idx}>
+                      <h3 className="font-bold mb-2">{col.heading}</h3>
+                      <ul className="space-y-1 text-sm text-gray-600">
+                        {col.items.map((item, i) => (
+                          <li key={i}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {/* Search */}
+        <div className="hidden md:flex flex-grow mx-6 max-w-md">
+          <input
+            type="text"
+            placeholder="Search for products, brands and more"
+            className="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring-1 ring-pink-500"
+          />
+        </div>
+
+        {/* Icons */}
+        <div className="hidden md:flex space-x-4 text-sm text-gray-700 font-semibold">
+          <div className="flex flex-col items-center">
+            <span>👤</span>
+            <span>Profile</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <span>🤍</span>
+            <span>Wishlist</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <span>👜</span>
+            <span>Bag</span>
+          </div>
+        </div>
+
+        {/* Mobile Menu Icon */}
+        <div className="md:hidden text-2xl">☰</div>
+      </div>
+    </nav>
+  );
+};
 
 // ✅ CardSection
 const CardSection = () => {
@@ -230,5 +410,6 @@ const App = () => (
 );
 
 // ✅ Render App
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
 root.render(<App />);
