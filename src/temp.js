@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css"; // Tailwind styles
+import Header from "./component/Header";
+import CardSection from "./component/CardSection";
+import Footer from "./component/Footer";
 
 const temp = "Shop Now";
 
@@ -105,38 +108,21 @@ const data = [
 
 ];
 
-// ✅ Functional Card component
-const CardSection = () => {
-  return (
-    <div className="flex flex-wrap justify-center gap-6 p-4 bg-gray-100">
-      {data.map((item, index) => (
-        <div
-          key={index}
-          className="bg-white shadow-md rounded p-4 max-w-xs text-center"
-        >
-          <img src={item.image} alt={item.heading} className="w-full h-40 object-cover rounded" />
-          <h2 className="mt-2 text-lg font-semibold">{item.heading}</h2>
-          <p className="text-red-600 text-xl">{item.offer}</p>
-          <button className="mt-2 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
-            {item.text}
-          </button>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 // ✅ Main App
 function App() {
   return (
-    <>
-      {/* header_section and footer_section should be real components */}
-      {/* <HeaderSection /> */}
-      <CardSection />
-      {/* <FooterSection /> */}
-    </>
+    <div className="min-h-screen bg-gray-100">
+      <Header /> {/* Stays sticky at top */}
+      <main className="flex flex-col gap-4 p-4">
+        <CardSection />
+    
+      </main>
+      <Footer/>
+    </div>
   );
 }
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
